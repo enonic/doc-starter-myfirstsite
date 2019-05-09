@@ -188,7 +188,6 @@ Using Content Studio, we will now map the "hello" page component to a content it
 
 . Select the site content "Hello World" and click btn:[edit]
 . From the preview panel on the right, choose the "Hello" page controller:
-+
 
 video::images/hello-world.mp4["Animation showing process of setting up page" options=autoplay, width=1024px]
 
