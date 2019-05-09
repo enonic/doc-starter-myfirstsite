@@ -21,17 +21,13 @@ image::images/ready-set-code.svg["Ready...Set...Code!", width=720px]
 
 == Create project
 
-To set up the development environment and initialize the project, follow the instructions in the https://developer.enonic.com/start[Getting started guide].
+To setup a project locally, simply run the following command:
 
-NOTE: *In step 2:* Choose "*My First Site*" starter, and create a *new sandbox* for the project
+  enonic project create
 
-====
-After deploying, you should find an entry similar to this in the XP sandbox log:
+Choose "My first site" from the list of starters, create a *new XP sandbox* and complete the setup wizard.
 
-  2019-04-09 13:40:40,765 INFO ... Application [<my.project.name>] installed successfully
-====
-
-Your XP instance (aka sandbox) should now be running on http://localhost:8080
+NOTE: *Don't have the Enonic CLI?* Visit the https://developer.enonic.com/start[Getting started guide] to install it.
 
 == Project structure
 
@@ -66,6 +62,21 @@ src/
 <7> Part components - used for building pages
 <8> Page components - root component for pages
 <9> Site descriptor, specifying this is a site app
+
+== Building and Deploying
+
+To build and deploy the app, run this command from your shell:
+
+  enonic project deploy
+
+Accept starting the sandbox
+
+[NOTE]
+====
+To verify that your app started successfully, you should find an entry similar to this in the sandbox log:
+
+  2019-04-09 13:40:40,765 INFO ... Application [name.of.your.app] installed successfully
+====
 
 
 == Sample Site
