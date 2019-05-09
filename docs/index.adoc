@@ -21,29 +21,19 @@ image::images/ready-set-code.svg["Ready...Set...Code!", width=720px]
 
 == Create project
 
-If you have not previously installed XP.
-Please visit the https://developer.enonic.com/start[Getting started guide] to get going.
+To set up the development environment and initialize the project, follow the instructions in the https://developer.enonic.com/start[Getting started guide].
 
-[NOTE]
+NOTE: *In step 2:* Choose "*My First Site*" starter, and create a *new sandbox* for the project
+
 ====
-Some hints to the process:
-
-* Step 1: If you have already installed CLI, you may skip this step
-* Step 2: Choose "My First Website" starter
-* Step 3: Deploy and start the XP sandbox
-* Wrapping up: Remember to install the apps from the Welcome tour, we will need some of them later on.
-
-If the XP tour does not start automatically, simply click the top left icon on the home screen
-====
-
-You should now have an XP sandbox and the application running on http://localhost:8080
-
-[NOTE]
-====
-To verify that your app started successfully, you should find an entry similar to this in the sandbox log:
+After deploying, you should find an entry similar to this in the XP sandbox log:
 
   2019-04-09 13:40:40,765 INFO ... Application [<my.project.name>] installed successfully
 ====
+
+Your XP instance (aka sandbox) should now be running on http://localhost:8080
+
+== Project structure
 
 The project folder created should now contain a project structure, looking something like this:
 
@@ -58,7 +48,6 @@ src/
     resources/ <!--4-->
       import/ <!--5-->
       assets/
-      services/
       sites/
         content-types/ <!--6-->
           country/
@@ -68,7 +57,7 @@ src/
         site.xml <!--9-->
 ----
 
-<1> *.gradle files are used by the app build system
+<1> gradle files are used by the app build system
 <2> Contains output files produced by the build
 <3> Optional folder for Java code (used to import sample site in this starter)
 <4> Main location for XP specific project code
@@ -137,7 +126,7 @@ Icons make it easier for editors to use Content Studio.
 
 More information about https://developer.enonic.com/docs/xp/stable/cms/content-types[Content types] and the https://developer.enonic.com/docs/xp/stable/cms/schemas[schema system] are available in the https://developer.enonic.com/docs/xp/[XP reference documentation].
 
-NOTE: If you are looking for "headless content" - XP also offers a way to serve raw content through an API, check out https://developer.enonic.com/start/headless-cms[the Headless CMS starter]
+NOTE: If you are looking to do "headless content" - XP also offers a way to serve raw content through an API, check out https://developer.enonic.com/start/headless-cms[the Headless CMS starter]
 
 == Pages
 
@@ -146,70 +135,62 @@ To perform server side rendering, XP provides a https://developer.enonic.com/doc
 Page components are essentially different JavaScript controllers used by the CMS to perform such rendering.
 
 
-=== Page controller
+=== Page component
 
-Follow the steps below to create a page controller called "Hello"
+A default page component is included in your application.
+It is located in your project under: `src/main/resources/site/pages/hello/`.
 
-. Create the component folder `src/main/resources/site/pages/hello/`.
-. Place a controller file inside the new folder:
-+
-.src/main/resources/site/pages/hello/hello.js
+It consists of two files, a controller and a view:
+
+.The Controller: src/main/resources/site/pages/hello/hello.js
 [source,js]
 ----
-include::../code-samples/pages/hello/hello.js[]
-----
-+
-. When completed, redeploy the app
-+
-  enonic project deploy
-+
+var portal = require('/lib/xp/portal'); // Import the portal library
+var thymeleaf = require('/lib/thymeleaf'); // Import the Thymeleaf library
 
-NOTE: Page controllers must reside in its own folder under the `site/pages/` directory.
-  The name of the controller JavaScript file must be the same as the directory that contains it.
+// Handle the GET request
+exports.get = function(req) {
+
+    // Prepare the model that will be passed to the view
+    var model = {
+        displayName: portal.getContent().displayName
+    };
+
+    // Specify the template file to use
+    var view = resolve('hello.html');
+
+    // Return the merged view and model in the response object
+    return {
+        body: thymeleaf.render(view, model)
+    };
+};
+----
+
+.And a View: src/main/resources/site/pages/hello/hello.html
+[source,js]
+----
+<!DOCTYPE html>
+<html>
+    <head>
+        <title data-th-text="${displayName}">Sample title</title>
+    </head>
+    <body>
+        <h1 data-th-text="${displayName} + ' - of views'">Sample header</h1>
+    </body>
+</html>
+----
+
+NOTE: The name of the controller JavaScript file must be the same as the component directory.
 
 === Setup page
 
-Using Content Studio, we will now map the component to a content item
+Using Content Studio, we will now map the "hello" page component to a content item:
 
 . Select the site content "Hello World" and click btn:[edit]
 . From the preview panel on the right, choose the "Hello" page controller:
 +
+
 video::images/hello-world.mp4["Animation showing process of setting up page" options=autoplay, width=1024px]
-
-== Using Views
-
-Our first controller produced HTML directly.
-According to the MVC (Model View Controller) pattern,
-we should separate the View (template) from the controller.
-In this step, we'll upgrade our page component to use the https://market.enonic.com/vendors/enonic/thymeleaf-lib[Thymeleaf templating engine]:
-
-. To make sure Thymeleaf is added to our project, we must update the `gradle.build` file.
-Uncomment the following line from the "dependencies" section:
-+
-      include "com.enonic.lib:lib-thymeleaf:2.0.0-RC1"
-+
-. Update the `hello.js` controller with the code below:
-+
-.src/main/resources/site/pages/hello.js
-[source,js]
-----
-include::../code-samples/pages/hello-view/hello.js[]
-----
-+
-. Add the view file `hello.html` to the component folder
-+
-.src/main/resources/site/pages/hello/hello.html
-[source,html]
-----
-include::../code-samples/pages/hello-view/hello.html[]
-----
-+
-. Redeploy the app:
-+
-  enonic project deploy
-+
-
-Refresh the site preview, and you should now see: "*Hello world - of views*" instead.
 
 
 == Regions
