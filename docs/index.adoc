@@ -23,9 +23,9 @@ image::images/ready-set-code.svg["Ready...Set...Code!", width=720px]
 
 To setup a project locally, simply run the following command:
 
-  enonic project create
+  enonic project create -r starter-myfirstsite
 
-Choose "My first site" from the list of starters, create a *new XP sandbox* and complete the setup wizard.
+Remember to create a *new XP sandbox* when completing the project wizard.
 
 NOTE: *Don't have the Enonic CLI?* Visit the https://developer.enonic.com/start[Getting started guide] to install it.
 
