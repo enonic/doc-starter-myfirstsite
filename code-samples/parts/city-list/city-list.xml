@@ -1,6 +1,6 @@
 <part xmlns="urn:enonic:xp:model:1.0">
   <display-name>City list</display-name>
-  <display-name>Show all cities with Google Maps</display-name>
+  <description>Show all cities with Google Maps</description>
   <form>
     <input type="ComboBox" name="mapType">
       <label>Map type</label>
