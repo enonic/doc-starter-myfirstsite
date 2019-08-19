@@ -137,12 +137,12 @@ Icons make it easier for editors to use Content Studio.
 
 More information about https://developer.enonic.com/docs/xp/stable/cms/content-types[Content types] and the https://developer.enonic.com/docs/xp/stable/cms/schemas[schema system] are available in the https://developer.enonic.com/docs/xp/[XP reference documentation].
 
-NOTE: If you are looking to do "headless content" - XP also offers a way to serve raw content through an API, check out https://developer.enonic.com/start/headless-cms[the Headless CMS starter]
+NOTE: If you are looking to do "headless content" - XP also offers a way to serve raw content through an API, check out https://developer.enonic.com/templates/headless-cms[the Headless CMS starter]
 
 == Pages
 
 We now have some content, but no preview or rendering.
-To perform server side rendering, XP provides a https://developer.enonic.com/docs/xp/stable/runtime/framework[Javascript framework].
+To perform server side rendering, XP provides a https://developer.enonic.com/docs/xp/stable/framework[Javascript framework].
 Page components are essentially different JavaScript controllers used by the CMS to perform such rendering.
 
 
